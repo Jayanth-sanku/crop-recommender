@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Recommendation</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+
+    <style>
+        .result-box {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 8px;
+            background-color: #007bff; /* Blue color */
+            color: black;
+            padding: 3px;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 3px;
+        }
+        
+        
+        body {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: url('{{ url_for("static", filename="images/crop.jpg") }}');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 500px; /* Adjust the width as needed */
+            max-height: 700px; /* Slightly increased max-height */
+            overflow-y: auto; /* Add scrollbars if content overflows vertically */
+            margin: 0 auto;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+        .button-group {
+            text-align: center;
+        }
+        .recommend-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .heading {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 30px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="heading">Crop Recommendation</h1>
+        <form action="/predict" method="POST">
+            <div class="input-group">
+                <label for="N">Enter Nitrogen value</label>
+                <input type="number" id="N" name="N" placeholder="E.g., 20" required>
+            </div>
+            <div class="input-group">
+                <label for="P">Enter Phosphorus value</label>
+                <input type="number" id="P" name="P" placeholder="E.g., 30" required>
+            </div>
+            <div class="input-group">
+                <label for="K">Enter Potassium value</label>
+                <input type="number" id="K" name="K" placeholder="E.g., 40" required>
+            </div>
+            <div class="input-group">
+                <label for="temperature">Enter Temperature</label>
+                <input type="number" id="temperature" name="temperature" step="0.1" placeholder="E.g., 40.0" required>
+            </div>
+            <div class="input-group">
+                <label for="humidity">Enter Humidity</label>
+                <input type="number" id="humidity" name="humidity" placeholder="E.g., 20" required>
+            </div>
+            <div class="input-group">
+                <label for="ph">Enter pH Value</label>
+                <input type="number" id="ph" name="ph" placeholder="E.g., 30" required>
+            </div>
+            <div class="input-group">
+                <label for="rainfall">Enter Rainfall</label>
+                <input type="number" id="rainfall" name="rainfall" placeholder="E.g., 50" required>
+            </div>
+       
+            {% if not result %}
+            <div class="button-group">
+                <button type="submit" class="recommend-button">Recommend Crop</button>
+            </div>
+            {% endif %}
+            
+            {% if result %}
+            <div class="result-box">
+                <h1>{{ result }}</h1>
+            </div>
+            {% endif %}
+        </form>
+
+
+    </div>
+
+
+</body>
+</html>
